@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Shoot And Run.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>ShootAndRun.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -12,6 +17,21 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>842E958E1D34155100DA462D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>842E95A01D34155100DA462D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>842E95AB1D34155100DA462D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>84FAA73F1D1D06EF00C21F3D</key>
 		<dict>
 			<key>primary</key>
