@@ -14,7 +14,7 @@ class PlayingSide {
     class var bodyCategoryMask: UInt32 { return 0 }
     class var bulletCategoryMask: UInt32 { return 0 }
     class var enemyCategoryMask: UInt32 { return 0 }
-    class var fireFrequency: NSTimeInterval { return 0 }
+    class var fireFrequency: TimeInterval { return 0 }
     class var dyingAnimation: Animation { return .None }
     class var shouldRemoveAfterDying: Bool { return false }
     

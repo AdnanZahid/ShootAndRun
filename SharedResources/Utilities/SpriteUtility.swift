@@ -24,7 +24,7 @@ class SpriteUtility {
         let texture: SKTexture = frames[0]
         let sprite: SKSpriteNode = SKSpriteNode.init(texture: texture)
         
-        sprite.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(frames, timePerFrame: 0.1, resize: true, restore: true)))
+        sprite.run(SKAction.repeatForever(SKAction.animate(with: frames, timePerFrame: 0.1, resize: true, restore: true)))
         
         return sprite;
     }

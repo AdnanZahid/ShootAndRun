@@ -14,7 +14,7 @@ class Hero: PlayingSide {
     override class var bodyCategoryMask: UInt32 { return 0x1 << 1 }
     override class var bulletCategoryMask: UInt32 { return 0x1 << 11 }
     override class var enemyCategoryMask: UInt32 { return 0x1 << 2 }
-    override class var fireFrequency: NSTimeInterval { return 0.1.seconds }
+    override class var fireFrequency: TimeInterval { return 0.1.seconds }
     override class var dyingAnimation: Animation { return .Explosion }
     override class var shouldRemoveAfterDying: Bool { return true }
     

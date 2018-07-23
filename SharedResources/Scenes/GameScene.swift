@@ -29,7 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //              FUNCTIONS             //
     ////////////////////////////////////////
     
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         
         makeWorld()
         
@@ -37,11 +37,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         makeHero()
         
-        makePlatform(frame.width/4)
+        makePlatform(x: frame.width/4)
         
-        makePlatform(frame.width + frame.width/4)
+        makePlatform(x: frame.width + frame.width/4)
         
-        makeEnemy(frame.width + frame.width/4)
+        makeEnemy(x: frame.width + frame.width/4)
         
         makeJoystick()
     }
@@ -62,7 +62,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func makeBoundaries() {
-        let borderBody = SKPhysicsBody(edgeFromPoint: CGPointMake(0, 0), toPoint: CGPointMake(frame.width, 0))
+        let borderBody = SKPhysicsBody(edgeFrom: CGPoint(x: 0, y: 0), to: CGPoint(x: frame.width, y: 0))
         borderBody.categoryBitMask = kPlatformCategoryMask
         borderBody.contactTestBitMask = Hero.bodyCategoryMask | Enemy.bodyCategoryMask
         physicsBody = borderBody
@@ -86,9 +86,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func spawnNewPlatformAndEnemy() {
-        if distanceCovered % frame.width == 0 || distanceCovered % frame.width == 1 {
-            makePlatform(distanceCovered + frame.width + frame.width/4)
-            makeEnemy(distanceCovered + frame.width + frame.width/4)
+        if distanceCovered.truncatingRemainder(dividingBy: frame.width) == 0 || distanceCovered.truncatingRemainder(dividingBy: frame.width) == 1 {
+            makePlatform(x: distanceCovered + frame.width + frame.width/4)
+            makeEnemy(x: distanceCovered + frame.width + frame.width/4)
         }
     }
     
@@ -158,7 +158,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    override func update(currentTime: CFTimeInterval) {
+    override func update(_ currentTime: CFTimeInterval) {
         
         moveWorld()
         
@@ -169,7 +169,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemyFire()
         
         #if os(iOS)
-            hero?.aim((joystick?.velocity.y)!)
+            hero?.aim(direction: (joystick?.velocity.y)!)
         #else
             hero?.aim(direction.rawValue)
         #endif
@@ -187,20 +187,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         #if os(iOS)
             joystick = Joystick()
             joystick?.zPosition = kJoystickZPosition
-            joystick?.position = CGPointMake(frame.width + kJoystickPositionX, frame.height/2)
+            joystick?.position = CGPoint(x: frame.width + kJoystickPositionX, y: frame.height/2)
             addChild(joystick!)
         #endif
     }
     
     #if os(iOS)
-        override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
            
             if gameOver == false {
 //                let touch: UITouch = touches.first!
 //                let touchLocation: CGPoint = touch.locationInNode(self)
     
 //                if touchLocation.x < self.frame.size.width / 2 {
-                    hero?.jump(jumpHeight!)
+                    hero?.jump(jumpHeight: jumpHeight!)
 //                }
                 
 //                if touchLocation.x >= self.frame.size.width / 2 {

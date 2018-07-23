@@ -42,26 +42,26 @@ class Character {
         self.playingSide = playingSide
         self.characterName = characterName
         
-        sprite = SpriteUtility.createSpriteWithAnimationAtlas("\(characterName)\(animation.rawValue)")
-        sprite.xScale *= playingSide.dynamicType.playerDirection
+        sprite = SpriteUtility.createSpriteWithAnimationAtlas(atlasName: "\(characterName)\(animation.rawValue)")
+        sprite.xScale *= type(of: playingSide).playerDirection
         sprite.position = CGPoint(x: x, y: y)
-        sprite.physicsBody = SKPhysicsBody.init(rectangleOfSize: sprite.size)
+        sprite.physicsBody = SKPhysicsBody(rectangleOf: sprite.size)
         sprite.physicsBody?.allowsRotation = false
         sprite.physicsBody?.mass = kCharacterMass
-        sprite.physicsBody?.categoryBitMask = playingSide.dynamicType.bodyCategoryMask
-        sprite.physicsBody?.contactTestBitMask = playingSide.dynamicType.enemyCategoryMask
+        sprite.physicsBody?.categoryBitMask = type(of: playingSide).bodyCategoryMask
+        sprite.physicsBody?.contactTestBitMask = type(of: playingSide).enemyCategoryMask
         
         physicsBody = sprite.physicsBody!
         
-        gunspark = SpriteUtility.createSpriteWithAnimationAtlas(kGunspark)
-        gunspark.xScale *= playingSide.dynamicType.playerDirection
-        gunspark.position = CGPointMake(kBulletDistanceXFromCharacterForward, kBulletDistanceYFromCharacterForward)
+        gunspark = SpriteUtility.createSpriteWithAnimationAtlas(atlasName: kGunspark)
+        gunspark.xScale *= type(of: playingSide).playerDirection
+        gunspark.position = CGPoint(x: kBulletDistanceXFromCharacterForward, y: kBulletDistanceYFromCharacterForward)
         sprite.addChild(gunspark)
         
-        NSTimer.every(playingSide.dynamicType.fireFrequency) {
-            
-            self.shouldFire = !self.dead
-        }
+//        _ = Timer.every(interval: type(of: playingSide).fireFrequency) {
+//            
+//            self.shouldFire = !self.dead
+//        }
         
         sprite.addChild(playingSide.makeForceField())
     }
@@ -71,13 +71,13 @@ class Character {
         if dead == false {
             if direction > 0 {
                 
-                applyAimAnimation(.WalkingUpForward)
+                applyAimAnimation(newAnimation: .WalkingUpForward)
             } else if direction < 0 {
                 
-                applyAimAnimation(.WalkingDownForward)
+                applyAimAnimation(newAnimation: .WalkingDownForward)
             } else {
                 
-                applyAimAnimation(.Walking)
+                applyAimAnimation(newAnimation: .Walking)
             }
         }
     }
@@ -88,7 +88,7 @@ class Character {
             animation = newAnimation
             
             if canJump == true {
-                applyAnimationAtlasToSprite("\(characterName)\(newAnimation.rawValue)", forever: true, completionHandler: {})
+                applyAnimationAtlasToSprite(atlasName: "\(characterName)\(newAnimation.rawValue)", forever: true, completionHandler: {})
             }
         }
     }
@@ -97,9 +97,9 @@ class Character {
         
         if dead == false && canJump == true {
             canJump = false
-            physicsBody.applyImpulse(CGVectorMake(0, jumpHeight))
+            physicsBody.applyImpulse(CGVector(dx: 0, dy: jumpHeight))
             animation = .Jumping
-            applyAnimationAtlasToSprite("\(characterName)\(animation.rawValue)", forever: true, completionHandler: {})
+            applyAnimationAtlasToSprite(atlasName: "\(characterName)\(animation.rawValue)", forever: true, completionHandler: {})
         }
     }
     
@@ -108,7 +108,7 @@ class Character {
         if dead == false && canJump == false {
             canJump = true
             animation = .Walking
-            applyAnimationAtlasToSprite("\(characterName)\(animation.rawValue)", forever: true, completionHandler: {})
+            applyAnimationAtlasToSprite(atlasName: "\(characterName)\(animation.rawValue)", forever: true, completionHandler: {})
         }
     }
     
@@ -138,8 +138,8 @@ class Character {
         return bullet.sprite
     }
     
-    func applyAnimationAtlasToSprite(atlasName: String, forever: Bool, completionHandler: () -> Void) {
+    func applyAnimationAtlasToSprite(atlasName: String, forever: Bool, completionHandler: @escaping () -> Void) {
         
-        sprite.applyAnimationAtlasToSprite(atlasName, forever: forever, completionHandler: completionHandler)
+        sprite.applyAnimationAtlasToSprite(atlasName: atlasName, forever: forever, completionHandler: completionHandler)
     }
 }

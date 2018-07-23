@@ -10,7 +10,7 @@ import SpriteKit
 
 extension SKSpriteNode {
     
-    func applyAnimationAtlasToSprite(atlasName: String, forever: Bool, completionHandler: () -> Void) {
+    func applyAnimationAtlasToSprite(atlasName: String, forever: Bool, completionHandler: @escaping () -> Void) {
         
         if atlasName != kNoneAnimation {
             var frames: Array <SKTexture> = Array()
@@ -23,18 +23,18 @@ extension SKSpriteNode {
             }
             
             removeAllActions()
-            runAction(frames, forever: forever, completionHandler: completionHandler)
+            runAction(frames: frames, forever: forever, completionHandler: completionHandler)
         }
     }
     
-    func runAction(frames: Array <SKTexture>, forever: Bool, completionHandler: () -> Void) {
+    func runAction(frames: Array <SKTexture>, forever: Bool, completionHandler: @escaping () -> Void) {
         
         if forever == false {
             
-            runAction(SKAction.animateWithTextures(frames, timePerFrame: 0.1, resize: true, restore: false), completion: completionHandler)
+            run(SKAction.animate(with: frames, timePerFrame: 0.1, resize: true, restore: true), completion: completionHandler)
         } else {
             
-            runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(frames, timePerFrame: 0.1, resize: true, restore: true)), completion: completionHandler)
+            run(SKAction.repeatForever(SKAction.animate(with: frames, timePerFrame: 0.1, resize: true, restore: true)), completion: completionHandler)
         }
     }
 }

@@ -33,13 +33,13 @@ class Platform {
         for i in 0 ..< numberOfBlocks {
             
             let block: SKSpriteNode = SKSpriteNode.init(imageNamed: "Platform\(blockType)")
-            block.position = CGPointMake(x + CGFloat(i) * block.frame.width, y)
+            block.position = CGPoint(x: x + CGFloat(i) * block.frame.width, y: y)
             
-            block.physicsBody = SKPhysicsBody.init(rectangleOfSize: block.size)
+            block.physicsBody = SKPhysicsBody(rectangleOf: block.size)
             block.physicsBody?.categoryBitMask = kPlatformCategoryMask
             block.physicsBody?.collisionBitMask = Hero.bodyCategoryMask | Enemy.bodyCategoryMask
             block.physicsBody?.contactTestBitMask = Hero.bodyCategoryMask | Enemy.bodyCategoryMask
-            block.physicsBody?.dynamic = false
+            block.physicsBody?.isDynamic = false
             
             sprite.addChild(block)
         }
